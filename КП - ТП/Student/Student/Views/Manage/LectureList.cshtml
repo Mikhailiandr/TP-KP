@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Student.Models.Lecture>
+
+@{
+    ViewBag.Title = "LectureList";
+}
+
+<h2>Лекции</h2>
+
+@if (User.IsInRole("Teacher"))
+{
+    <p>
+        @Html.ActionLink("Создать лекцию", "CreateLecture")
+    </p>
+}
+    @foreach (var item in Model)
+    {
+    <div style="border-collapse:separate; border-style:outset; border-spacing:10px;">
+        <p></p>
+        <b>
+            @Html.DisplayFor(modelItem => item.name)
+        </b>
+        <p></p>
+        @Html.DisplayFor(modelItem => item.lecturetext)
+        <p></p>
+        Дата:
+        @Html.DisplayFor(modelItem => item.date)
+
+        @if (User.IsInRole("Teacher"))
+        {
+            <p>
+                @Html.ActionLink("Удалить", "DeleteLecture", new { id = item.id })
+                @Html.ActionLink("Изменить", "EditLecture", new { id = item.id })
+            </p>
+        }
+        </div>
+    }

@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Student.Models.Test>
+
+@{
+    ViewBag.Title = "TestList";
+}
+
+<h2>Тесты</h2>
+
+@if (User.IsInRole("Teacher"))
+{
+<p>
+    @Html.ActionLink("Create New", "CreateTest")
+</p>}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.name)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.name)
+        </td>
+        @if (User.IsInRole("Teacher"))
+        {
+        <td>
+            @Html.ActionLink("Удалить", "DeleteTest", new { id = item.id })
+        </td>
+        }
+
+        @if (User.IsInRole("User"))
+        {
+            <td>
+                @Html.ActionLink("Пройти тест", "GoTest", new { id = item.id })
+            </td>
+        }
+        </tr>
+}
+
+</table>
